@@ -74,7 +74,6 @@ filetype indent on
 set wildmenu
 set splitright
 set nowrap
-set listchars=eol:\ ,tab:>·,trail:·,extends:>,precedes:<,space:·
 set list
 set noswapfile
 " open diffs in vertical split.
@@ -88,6 +87,9 @@ set laststatus=2 " always show statusline
 " set statusline if not yet set in plugin configuration
 set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set autoread
+set encoding=utf-8
+set fileencoding=utf-8
+set listchars=eol:\ ,tab:>·,trail:·,extends:>,precedes:<,space:·
 
 " search
 set incsearch
@@ -223,3 +225,4 @@ let g:goyo_linenr = 1
 
 " gitgutter
 let g:gitgutter_max_signs=9999
+
