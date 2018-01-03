@@ -224,5 +224,9 @@ nmap <leader>gc :Goyo!<CR>
 let g:goyo_linenr = 1
 
 " gitgutter
-let g:gitgutter_max_signs=9999
+let g:gitgutter_realtime = 0 " disable realtime update, in hope vim doesn't lag
+let g:gitgutter_eager = 0
+let g:gitgutter_max_signs = 250
+nnoremap <leader>g :GitGutterToggle<CR>
+nnoremap <leader>G :GitGutterLineHighlightsToggle<CR>
 
