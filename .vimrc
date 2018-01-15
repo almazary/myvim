@@ -39,7 +39,7 @@ Plugin 'maksimr/vim-jsbeautify'
 Plugin 'tobys/vmustache'
 Plugin 'tobys/pdv'
 
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 
 Plugin 'junegunn/goyo.vim'
 
@@ -49,6 +49,12 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'junegunn/gv.vim'
 
 Plugin 'Olical/vim-enmasse'
+
+Plugin 'easymotion/vim-easymotion'
+
+Plugin 'editorconfig/editorconfig-vim'
+
+Plugin 'w0rp/ale'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -195,16 +201,16 @@ let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates"
 nnoremap <leader>dc :call pdv#DocumentCurrentLine()<CR>
 
 " Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-nmap <leader>st :SyntasticToggleMode<CR>
-nmap <leader>sc :SyntasticCheck<CR>
-let g:syntastic_mode_map = {'passive_filetypes': ['html']}
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"nmap <leader>st :SyntasticToggleMode<CR>
+"nmap <leader>sc :SyntasticCheck<CR>
+"let g:syntastic_mode_map = {'passive_filetypes': ['html']}
 
 " COMPLETOR
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -229,4 +235,38 @@ let g:gitgutter_eager = 0
 let g:gitgutter_max_signs = 250
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>G :GitGutterLineHighlightsToggle<CR>
+
+if (v:version >= 800 && (has('python') || has('python3')))
+    " let g:ale_sign_error = '●'
+    let g:ale_sign_error = 'E'
+    " let g:ale_open_list = 1
+    let g:ale_lint_delay = 50
+    let g:ale_sign_column_always = 1
+    let g:ale_linters = {'javascript': ['standard']}
+    if (executable('standard'))
+        let g:ale_javascript_standard_executable = 'standard'
+        let g:ale_javascript_standard_use_global = 1
+    endif
+    let g:ale_fixers = { 'javascript': 'standard' }
+    let g:ale_fix_on_save = 1
+    let g:ale_lint_on_enter = 1
+    function! AleStatus() abort
+        let l:counts = ale#statusline#Count(bufnr(''))
+
+        let l:all_errors = l:counts.error + l:counts.style_error
+        let l:all_non_errors = l:counts.total - l:all_errors
+
+        return l:counts.total == 0 ? '' : printf(
+                    \   '%dE %dW',
+                    \   all_errors,
+                    \   all_non_errors
+                    \)
+    endfunction
+
+    " highlight Error ctermbg=1 ctermfg=0
+    highlight link ALEErrorLine Error
+endif
+
+" change split sparator color
+hi VertSplit ctermbg=NONE
 
