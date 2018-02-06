@@ -56,6 +56,13 @@ Plugin 'editorconfig/editorconfig-vim'
 
 Plugin 'w0rp/ale'
 
+" save sssion
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+
+" buffer
+Plugin 'schickling/vim-bufonly'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -84,17 +91,15 @@ set list
 set noswapfile
 " open diffs in vertical split.
 set diffopt +=vertical
-" Make the vertical split separator looks simpler
-set fillchars+=vert:\ " replace separator with whitespace
-autocmd ColorScheme * hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
-hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
+" change split sparator color
+hi VertSplit ctermbg=NONE
 " Statusline
 set laststatus=2 " always show statusline
 " set statusline if not yet set in plugin configuration
 set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set autoread
 set encoding=utf-8
-set fileencoding=utf-8
+"set fileencoding=utf-8
 set listchars=eol:\ ,tab:>·,trail:·,extends:>,precedes:<,space:·
 
 " search
@@ -222,6 +227,11 @@ if has("gui_macvim")
     set guifont=Menlo\ Regular:h13
     set guioptions-=L " remove left scroll bar
     set guioptions-=r " remove right scroll bar
+
+    " Make the vertical split separator looks simpler
+    set fillchars+=vert:\ " replace separator with whitespace
+    autocmd ColorScheme * hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
+    hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
 endif
 
 " GOYO
@@ -266,7 +276,4 @@ if (v:version >= 800 && (has('python') || has('python3')))
     " highlight Error ctermbg=1 ctermfg=0
     highlight link ALEErrorLine Error
 endif
-
-" change split sparator color
-hi VertSplit ctermbg=NONE
 
