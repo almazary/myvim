@@ -48,6 +48,8 @@ Plugin 'Yggdroot/indentLine'
 ":GV untuk semua file :GV! untuk file yang sedang dibuka
 Plugin 'junegunn/gv.vim'
 
+" search all with :Rg, and then call :EnMasse for open result serach to
+" buffers, then call :%s/find/replce
 Plugin 'Olical/vim-enmasse'
 
 Plugin 'easymotion/vim-easymotion'
@@ -247,9 +249,6 @@ nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>G :GitGutterLineHighlightsToggle<CR>
 
 if (v:version >= 800 && (has('python') || has('python3')))
-    " let g:ale_sign_error = '●'
-    let g:ale_sign_error = 'E'
-    " let g:ale_open_list = 1
     let g:ale_lint_delay = 50
     let g:ale_sign_column_always = 1
     let g:ale_linters = {'javascript': ['standard']}
@@ -260,20 +259,7 @@ if (v:version >= 800 && (has('python') || has('python3')))
     let g:ale_fixers = { 'javascript': 'standard' }
     let g:ale_fix_on_save = 1
     let g:ale_lint_on_enter = 1
-    function! AleStatus() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
-
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
-
-        return l:counts.total == 0 ? '' : printf(
-                    \   '%dE %dW',
-                    \   all_errors,
-                    \   all_non_errors
-                    \)
-    endfunction
-
-    " highlight Error ctermbg=1 ctermfg=0
-    highlight link ALEErrorLine Error
 endif
 
+" session
+let g:session_autoload = 'no'
