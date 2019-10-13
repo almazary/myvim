@@ -12,12 +12,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'scrooloose/nerdtree'
 
-Plugin 'airblade/vim-gitgutter'
-
 " \cc atau \cu
 Plugin 'scrooloose/nerdcommenter'
-
-Plugin 'kien/ctrlp.vim'
 
 " valign =
 Plugin 'junegunn/vim-easy-align'
@@ -28,18 +24,11 @@ Plugin 'tpope/vim-fugitive'
 " :Rg <string|pattern>
 Plugin 'jremmen/vim-ripgrep'
 
-" autocomplete
-Plugin 'maralla/completor.vim'
-
-Plugin 'flazz/vim-colorschemes'
-
 Plugin 'maksimr/vim-jsbeautify'
 
 " phpdoc
 Plugin 'tobys/vmustache'
 Plugin 'tobys/pdv'
-
-"Plugin 'scrooloose/syntastic'
 
 Plugin 'junegunn/goyo.vim'
 
@@ -56,14 +45,28 @@ Plugin 'easymotion/vim-easymotion'
 
 Plugin 'editorconfig/editorconfig-vim'
 
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
+
+Plugin 'mhinz/vim-signify'
 
 " save sssion
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
+Plugin 'xolox/vim-colorscheme-switcher'
 
 " buffer
 Plugin 'schickling/vim-bufonly'
+
+" multicusor
+Plugin 'terryma/vim-multiple-cursors'
+
+" FZF
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -71,7 +74,8 @@ filetype plugin indent on    " required
 
 " COLORS
 syntax enable
-colorscheme Tomorrow-Night
+colorscheme onedark
+set background=dark
 
 " SPACES & TABS
 set autoindent
@@ -94,11 +98,11 @@ set noswapfile
 " open diffs in vertical split.
 set diffopt +=vertical
 " change split sparator color
-hi VertSplit ctermbg=NONE
+" hi VertSplit ctermbg=NONE
 " Statusline
 set laststatus=2 " always show statusline
 " set statusline if not yet set in plugin configuration
-set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+" set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set autoread
 set encoding=utf-8
 "set fileencoding=utf-8
@@ -176,17 +180,11 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Ctrl P
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_map = '<c-f>'
-nmap <C-b> :CtrlPBuffer<CR>
-nmap <C-u> :CtrlPMRU<CR>
-
 " Beautyjs
-map <leader>bh :call RangeHtmlBeautify()<cr>
-map <leader>bj :call RangeJsBeautify()<cr>
-map <leader>bo :call RangeJsonBeautify()<cr>
-map <leader>bc :call RangeCSSBeautify()<cr>
+map <leader>beh :call RangeHtmlBeautify()<cr>
+map <leader>bej :call RangeJsBeautify()<cr>
+map <leader>beo :call RangeJsonBeautify()<cr>
+map <leader>bec :call RangeCSSBeautify()<cr>
 
 " https://github.com/beautify-web/js-beautify
 let g:config_Beautifier = {}
@@ -207,31 +205,18 @@ let g:config_Beautifier['css'].max_char = '0'
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates"
 nnoremap <leader>dc :call pdv#DocumentCurrentLine()<CR>
 
-" Syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"nmap <leader>st :SyntasticToggleMode<CR>
-"nmap <leader>sc :SyntasticCheck<CR>
-"let g:syntastic_mode_map = {'passive_filetypes': ['html']}
-
-" COMPLETOR
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
-
 " macvim
 if has("gui_macvim")
     set guifont=Menlo\ Regular:h13
+endif
+
+" vimr & macvim
+if (has("gui_vimr") || has("gui_macvim") || has('nvim'))
     set guioptions-=L " remove left scroll bar
     set guioptions-=r " remove right scroll bar
 
     " Make the vertical split separator looks simpler
-    set fillchars+=vert:\ " replace separator with whitespace
+    set fillchars+=vert:\ " replace separator ith hitespace
     autocmd ColorScheme * hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
     hi VertSplit cterm=NONE ctermbg=8 guibg=NONE
 endif
@@ -241,14 +226,13 @@ nmap <leader>gy :Goyo 120<CR>
 nmap <leader>gc :Goyo!<CR>
 let g:goyo_linenr = 1
 
-" gitgutter
-let g:gitgutter_realtime = 0 " disable realtime update, in hope vim doesn't lag
-let g:gitgutter_eager = 0
-let g:gitgutter_max_signs = 250
-nnoremap <leader>g :GitGutterToggle<CR>
-nnoremap <leader>G :GitGutterLineHighlightsToggle<CR>
+" signify
+let g:signify_vcs_list = ['git']
+let g:signify_realtime = 1
+let g:signify_cursorhold_insert = 0
+let g:signify_cursorhold_normal = 0
 
-if (v:version >= 800 && (has('python') || has('python3')))
+if ((v:version >= 800 && (has('python') || has('python3'))) || has('nvim'))
     let g:ale_lint_delay = 50
     let g:ale_sign_column_always = 1
     let g:ale_linters = {'javascript': ['standard']}
@@ -263,3 +247,32 @@ endif
 
 " session
 let g:session_autoload = 'no'
+let g:session_lock_enabled = 0
+
+autocmd BufNewFile,BufRead *.blade.php set ft=html " Fix blade auto-indent
+
+" hightlight the word under the cursor
+nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+
+" hilangkan warna signcolum
+highlight SignColumn ctermbg=NONE cterm=NONE guibg=NONE gui=NONE
+" enable mouse iterm2
+set mouse=nicr
+
+" FZF setting
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_buffers_jump = 1
+nmap <silent> <leader>o :FzfFiles<CR>
+nmap <silent> <leader>O :FzfFiles!<CR>
+nmap <silent> <leader>b :FzfBuffers<CR>
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir FzfFiles
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+
+" tutup nerdtree jika tidak ada buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" airline
+let g:airline_theme='onedark'
+
