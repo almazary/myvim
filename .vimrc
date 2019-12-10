@@ -1,81 +1,119 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Make sure you use single quotes
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 " \cc atau \cu
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " valign =
-Plugin 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 " git
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " :Rg <string|pattern>
-Plugin 'jremmen/vim-ripgrep'
+Plug 'jremmen/vim-ripgrep'
 
-Plugin 'maksimr/vim-jsbeautify'
+Plug 'maksimr/vim-jsbeautify'
 
 " phpdoc
-Plugin 'tobys/vmustache'
-Plugin 'tobys/pdv'
+Plug 'tobys/vmustache'
+Plug 'tobys/pdv'
 
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 
-Plugin 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 
 ":GV untuk semua file :GV! untuk file yang sedang dibuka
-Plugin 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim'
 
 " search all with :Rg, and then call :EnMasse for open result serach to
 " buffers, then call :%s/find/replce
-Plugin 'Olical/vim-enmasse'
+Plug 'Olical/vim-enmasse'
 
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 
-Plugin 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 
-" Plugin 'w0rp/ale'
-Plugin 'dense-analysis/ale'
+" Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
-Plugin 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 
 " save sssion
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'xolox/vim-colorscheme-switcher'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-colorscheme-switcher'
 
 " buffer
-Plugin 'schickling/vim-bufonly'
+Plug 'schickling/vim-bufonly'
 
 " multicusor
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 
 " FZF
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" ctags
+" Plug 'ludovicchabant/vim-gutentags'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'rainglow/vim'
+
+" COLOR SCHEMES
+Plug 'mhartington/oceanic-next'
+Plug 'jacoborus/tender.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'drewtempelmeyer/palenight.vim'
+
+" vim javascript
+Plug 'pangloss/vim-javascript'
+
+" Initialize plugin system
+call plug#end()
+
 
 " COLORS
 syntax enable
-colorscheme onedark
+" colorscheme onedark
+" colorscheme Tomorrow-Night
+" set background=dark
+set redrawtime=10000
+
+" set t_Co=256
+" colorscheme OceanicNext
+" set background=dark
+
+" colorscheme tender
+
+" colorscheme nord
+
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
+
 set background=dark
+colorscheme palenight
+
+" If you have vim >=8.0 or Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
 
 " SPACES & TABS
 set autoindent
@@ -102,7 +140,7 @@ set diffopt +=vertical
 " Statusline
 set laststatus=2 " always show statusline
 " set statusline if not yet set in plugin configuration
-" set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=\(%{toupper(mode())}\)\ \%{fugitive#statusline()}\ %<%t\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set autoread
 set encoding=utf-8
 "set fileencoding=utf-8
@@ -202,7 +240,7 @@ let g:config_Beautifier['css'].preserve_newlines = '0'
 let g:config_Beautifier['css'].max_char = '0'
 
 " PHP documenter
-let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates"
+let g:pdv_template_dir = $HOME ."/.vim/plugged/pdv/templates"
 nnoremap <leader>dc :call pdv#DocumentCurrentLine()<CR>
 
 " macvim
@@ -250,6 +288,7 @@ let g:session_autoload = 'no'
 let g:session_lock_enabled = 0
 
 autocmd BufNewFile,BufRead *.blade.php set ft=html " Fix blade auto-indent
+autocmd Filetype json :IndentLinesDisable
 
 " hightlight the word under the cursor
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
@@ -273,6 +312,63 @@ command! -bang -nargs=? -complete=dir FzfFiles
 " tutup nerdtree jika tidak ada buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" airline
-let g:airline_theme='onedark'
+" gutentags <C-]>
+" let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", ".git", "node_modules", "*.vim/bundle/*"]
+" let g:gutentags_ctags_executable = '/usr/local/Cellar/universal-ctags/HEAD-7492b90/bin/ctags'
 
+
+
+" COC setup
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+" set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
