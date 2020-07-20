@@ -75,7 +75,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 
 " vim javascript
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 
 " Initialize plugin system
 call plug#end()
@@ -84,7 +84,8 @@ call plug#end()
 " COLORS
 syntax enable
 " colorscheme onedark
-" colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night
+" colorscheme Tomorrow
 " set background=dark
 set redrawtime=10000
 
@@ -101,8 +102,8 @@ set redrawtime=10000
 " let ayucolor="dark"   " for dark version of theme
 " colorscheme ayu
 
-set background=dark
-colorscheme palenight
+" set background=dark
+" colorscheme palenight
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
@@ -315,8 +316,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " gutentags <C-]>
 " let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", ".git", "node_modules", "*.vim/bundle/*"]
 " let g:gutentags_ctags_executable = '/usr/local/Cellar/universal-ctags/HEAD-7492b90/bin/ctags'
-
-
 
 " COC setup
 " if hidden is not set, TextEdit might fail.
